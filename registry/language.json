@@ -1,0 +1,78 @@
+{
+  "outcomes": [
+    "allow",
+    "deny",
+    "ask",
+    "modify",
+    "watch"
+  ],
+  "outcome_rank": {
+    "allow": 0,
+    "watch": 1,
+    "modify": 2,
+    "ask": 3,
+    "deny": 4
+  },
+  "standard_outcome_reason": {
+    "allow": "POLICY_SATISFIED",
+    "ask": "RULE_ASK",
+    "deny": "RULE_DENY",
+    "modify": "POLICY_ADVISORY",
+    "watch": "POLICY_ADVISORY"
+  },
+  "reason_codes": [
+    {
+      "code": "ACTION_FORBIDDEN",
+      "text": "This action is forbidden."
+    },
+    {
+      "code": "EVALUATION_ERROR",
+      "text": "The policy could not be evaluated, so the action is refused."
+    },
+    {
+      "code": "MONITOR_WOULD_BLOCK",
+      "text": "Monitor mode: this action would have been blocked."
+    },
+    {
+      "code": "NO_MATCHING_RULE",
+      "text": "No rule matched, so the policy default applies."
+    },
+    {
+      "code": "PARAM_IMMUTABLE_VIOLATION",
+      "text": "A fixed parameter was changed."
+    },
+    {
+      "code": "PARAM_OUT_OF_BOUNDS",
+      "text": "A parameter is out of bounds."
+    },
+    {
+      "code": "POLICY_ADVISORY",
+      "text": "The action is allowed with a flag."
+    },
+    {
+      "code": "POLICY_SATISFIED",
+      "text": "The policy allows this action."
+    },
+    {
+      "code": "RATE_LIMIT_EXCEEDED",
+      "text": "The rate limit is exceeded."
+    },
+    {
+      "code": "RULE_ASK",
+      "text": "A policy rule requires approval for this action."
+    },
+    {
+      "code": "RULE_DENY",
+      "text": "A policy rule denies this action."
+    },
+    {
+      "code": "THRESHOLD_EXCEEDED",
+      "text": "A limit is exceeded."
+    }
+  ],
+  "reserved_namespaces": [
+    "core",
+    "cpl",
+    "std"
+  ]
+}

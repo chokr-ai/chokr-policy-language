@@ -1,0 +1,24 @@
+{
+  "expected": {
+    "error": "DECLARATION_CONFLICT"
+  },
+  "id": "decision/duplicate_rule_ids",
+  "input": {
+    "action": {
+      "action_uri": "docs:search",
+      "arguments": {
+        "query": "a"
+      },
+      "kind": "retrieval",
+      "target": "index",
+      "timestamp": "2026-01-01T12:00:00Z"
+    },
+    "files": {
+      "p.yaml": "cpl: \"1.0\"\nid: vector-policy\nversion: 1\ndefault: deny\nrules:\n  - id: allow-read\n    match: {kind: [retrieval]}\n    outcome: allow\n  - id: allow-read\n    match: {kind: [retrieval]}\n    outcome: allow\n"
+    },
+    "policies": [
+      "p.yaml"
+    ]
+  },
+  "level": "core"
+}

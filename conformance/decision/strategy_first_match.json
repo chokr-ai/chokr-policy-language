@@ -1,0 +1,32 @@
+{
+  "expected": {
+    "matched_rules": [
+      "a"
+    ],
+    "outcome": "allow",
+    "reason_codes": [
+      "POLICY_SATISFIED"
+    ]
+  },
+  "id": "decision/strategy_first_match",
+  "input": {
+    "action": {
+      "action_uri": "app:act",
+      "arguments": {
+        "n": 5,
+        "path": "/data/a.txt",
+        "s": "hello"
+      },
+      "kind": "tool_call",
+      "target": "tool",
+      "timestamp": "2026-01-05T10:00:00Z"
+    },
+    "files": {
+      "p.yaml": "cpl: \"1.0\"\nid: vector-policy\nversion: 1\ndefault: deny\nstrategy: first_match\nrules:\n  - {id: a, outcome: allow, match: {kind: [tool_call]}}\n  - {id: b, outcome: deny, match: {kind: [tool_call]}}\n"
+    },
+    "policies": [
+      "p.yaml"
+    ]
+  },
+  "level": "core"
+}

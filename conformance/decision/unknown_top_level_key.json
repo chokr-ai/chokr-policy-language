@@ -1,0 +1,24 @@
+{
+  "expected": {
+    "error": "SCHEMA_INVALID"
+  },
+  "id": "decision/unknown_top_level_key",
+  "input": {
+    "action": {
+      "action_uri": "docs:search",
+      "arguments": {
+        "query": "a"
+      },
+      "kind": "retrieval",
+      "target": "index",
+      "timestamp": "2026-01-01T12:00:00Z"
+    },
+    "files": {
+      "p.yaml": "cpl: \"1.0\"\nid: vector-policy\nversion: 1\ndefault: deny\nmystery: 1\nrules:\n  - id: allow-read\n    match: {kind: [retrieval]}\n    outcome: allow\n"
+    },
+    "policies": [
+      "p.yaml"
+    ]
+  },
+  "level": "core"
+}

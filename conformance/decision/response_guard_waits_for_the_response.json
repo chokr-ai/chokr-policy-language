@@ -1,0 +1,30 @@
+{
+  "expected": {
+    "matched_rules": [
+      "r"
+    ],
+    "outcome": "allow",
+    "reason_codes": [
+      "POLICY_SATISFIED"
+    ]
+  },
+  "id": "decision/response_guard_waits_for_the_response",
+  "input": {
+    "action": {
+      "action_uri": "app:act",
+      "arguments": {
+        "path": "/data/a.txt"
+      },
+      "kind": "tool_call",
+      "target": "tool",
+      "timestamp": "2026-01-05T10:00:00Z"
+    },
+    "files": {
+      "p.yaml": "cpl: \"1.0\"\nid: vector-policy\nversion: 1\ndefault: deny\nrules:\n  - id: r\n    outcome: allow\n    match: {kind: [tool_call]}\n    when:\n      deny: {arguments.response: {contains: SECRET}}\n"
+    },
+    "policies": [
+      "p.yaml"
+    ]
+  },
+  "level": "core"
+}

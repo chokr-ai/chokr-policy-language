@@ -1,0 +1,20 @@
+{
+  "expected": {
+    "ok": true,
+    "sections": [
+      "constants",
+      "parameters"
+    ]
+  },
+  "id": "imports/chain",
+  "input": {
+    "entries": [
+      "b.decl.yaml"
+    ],
+    "files": {
+      "a.decl.yaml": "schema: cpl.declarations/1.0\nnamespace: demo.a\nversion: 1\nparameters:\n  limit: {type: integer, default: 10}\n  names: {type: \"list<string>\", default: [alpha, beta]}\n",
+      "b.decl.yaml": "schema: cpl.declarations/1.0\nnamespace: demo.b\nversion: 1\nimports:\n  - {from: ./a.decl.yaml}\nconstants:\n  top: {type: integer, value: 3}\n"
+    }
+  },
+  "level": "core"
+}

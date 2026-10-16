@@ -1,0 +1,10 @@
+{
+  "expected": {
+    "canonical": "timestamp"
+  },
+  "id": "types/valid_04",
+  "input": {
+    "type": "timestamp"
+  },
+  "level": "core"
+}

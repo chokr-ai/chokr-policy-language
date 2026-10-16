@@ -1,0 +1,15 @@
+{
+  "expected": {
+    "error": "PARAM_UNBOUND"
+  },
+  "id": "declarations/parameter_without_default",
+  "input": {
+    "entries": [
+      "a.decl.yaml"
+    ],
+    "files": {
+      "a.decl.yaml": "schema: cpl.declarations/1.0\nnamespace: demo.a\nversion: 1\nparameters:\n  limit: {type: integer}\n  names: {type: \"list<string>\", default: [alpha, beta]}\n"
+    }
+  },
+  "level": "core"
+}

@@ -1,0 +1,42 @@
+{
+  "expected": {
+    "matched_rules": [
+      "allow-big",
+      "deny-sig"
+    ],
+    "outcome": "deny",
+    "reason_codes": [
+      "RULE_DENY",
+      "POLICY_SATISFIED"
+    ]
+  },
+  "id": "decision/signal_denies",
+  "input": {
+    "action": {
+      "action_uri": "app:act",
+      "arguments": {
+        "n": 5
+      },
+      "kind": "tool_call",
+      "target": "tool",
+      "timestamp": "2026-01-01T12:00:00Z"
+    },
+    "files": {
+      "p.yaml": "cpl: \"1.0\"\nid: vector-policy\nversion: 1\ndefault: deny\nrules:\n  - id: allow-big\n    match: {kind: [tool_call]}\n    when: {expr: \"arguments.n > 3\"}\n    outcome: allow\n  - id: deny-sig\n    match: {kind: [tool_call]}\n    when: {signal: {code: scan.destructive}}\n    outcome: deny\n    reason: RULE_DENY\n"
+    },
+    "policies": [
+      "p.yaml"
+    ],
+    "signals": [
+      {
+        "code": "scan.destructive",
+        "evidence": {
+          "excerpt": "DROP"
+        },
+        "severity": "high",
+        "source": "sandbox"
+      }
+    ]
+  },
+  "level": "core"
+}

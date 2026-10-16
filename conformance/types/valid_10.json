@@ -1,0 +1,10 @@
+{
+  "expected": {
+    "canonical": "optional<number>"
+  },
+  "id": "types/valid_10",
+  "input": {
+    "type": "optional<number>"
+  },
+  "level": "core"
+}

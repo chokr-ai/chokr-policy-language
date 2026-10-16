@@ -1,0 +1,26 @@
+{
+  "expected": {
+    "absent": false,
+    "static_type": "integer",
+    "type": "integer",
+    "value": -2
+  },
+  "id": "expressions/valid_10",
+  "input": {
+    "arguments": {
+      "m": {
+        "k": 1
+      },
+      "n": 5,
+      "s": "hello",
+      "text": "a,b",
+      "xs": [
+        1,
+        2,
+        3
+      ]
+    },
+    "expression": "floor(-1.5)"
+  },
+  "level": "core"
+}

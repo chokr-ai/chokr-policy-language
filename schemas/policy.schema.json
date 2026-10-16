@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cpl.policy/1.0",
+  "title": "CPL policy document",
+  "description": "Structural schema of a policy file (YAML or JSON). Expressions, types and cross-references are checked by the engine, not here.",
+  "type": "object",
+  "required": ["cpl"],
+  "properties": {
+    "cpl": {"const": "1.0"},
+    "id": {"type": "string", "minLength": 1},
+    "version": {"type": ["integer", "string"]},
+    "description": {"type": "string"},
+    "fragment": {"type": "boolean"},
+    "imports": {"type": "array", "items": {"$ref": "#/$defs/import"}},
+    "vocabulary": {"type": "string"},
+    "params": {"type": "object"},
+    "mode": {"enum": ["enforce", "monitor"]},
+    "default": {"enum": ["allow", "deny"]},
+    "strategy": {"enum": ["first_match", "deny_overrides", "priority"]},
+    "risk_tiers": {"type": "array"},
+    "default_risk_tier": {"type": "string"},
+    "conditions": {"type": "object"},
+    "rules": {"type": "array", "maxItems": 4096, "items": {"$ref": "#/$defs/rule"}},
+    "ext": {"type": "object"}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "import": {
+      "type": "object",
+      "required": ["from"],
+      "properties": {
+        "from": {"type": "string"},
+        "as": {"type": "string"},
+        "digest": {"type": "string"},
+        "only": {"type": "array", "items": {"type": "string"}},
+        "rename": {"type": "object", "additionalProperties": {"type": "string"}},
+        "with": {"type": "object"}
+      },
+      "additionalProperties": false
+    },
+    "obligation": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {"type": {"type": "string"}, "params": {"type": "object"}},
+      "additionalProperties": false
+    },
+    "edit": {
+      "type": "object",
+      "required": ["op", "json_pointer"],
+      "properties": {
+        "op": {"enum": ["redact", "replace", "drop_field", "set"]},
+        "json_pointer": {"type": "string", "pattern": "^(/.*)?$"},
+        "value": {},
+        "placeholder": {"type": "string"}
+      }
+    },
+    "modify": {
+      "type": "object",
+      "minProperties": 1,
+      "maxProperties": 1,
+      "properties": {
+        "apply_suggested": {"const": true},
+        "replace": {"type": "object"},
+        "edits": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/edit"}}
+      },
+      "additionalProperties": false
+    },
+    "rule": {
+      "type": "object",
+      "required": ["id", "outcome"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"},
+        "description": {"type": "string"},
+        "priority": {"type": "integer"},
+        "enabled": {"type": "boolean"},
+        "mode": {"enum": ["enforce", "monitor"]},
+        "match": {"type": "object"},
+        "let": {"type": "object", "propertyNames": {"pattern": "^[a-z][a-z0-9_]*$"}, "additionalProperties": {"type": "string"}},
+        "when": {"type": "object"},
+        "outcome": {"enum": ["allow", "deny", "ask", "modify", "watch"]},
+        "modify": {"$ref": "#/$defs/modify"},
+        "reason": {"type": "string"},
+        "explain": {"type": "string"},
+        "hint": {"type": "object"},
+        "obligations": {"type": "array", "items": {"$ref": "#/$defs/obligation"}},
+        "ext": {"type": "object"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

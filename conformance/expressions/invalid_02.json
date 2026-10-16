@@ -1,0 +1,23 @@
+{
+  "expected": {
+    "error": "DECLARATION_UNKNOWN_NAME"
+  },
+  "id": "expressions/invalid_02",
+  "input": {
+    "arguments": {
+      "m": {
+        "k": 1
+      },
+      "n": 5,
+      "s": "hello",
+      "text": "a,b",
+      "xs": [
+        1,
+        2,
+        3
+      ]
+    },
+    "expression": "unknown_fn(1)"
+  },
+  "level": "core"
+}

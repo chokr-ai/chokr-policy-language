@@ -1,0 +1,30 @@
+{
+  "expected": {
+    "matched_rules": [],
+    "outcome": "deny",
+    "reason_codes": [
+      "NO_MATCHING_RULE"
+    ]
+  },
+  "id": "decision/time_window_outside",
+  "input": {
+    "action": {
+      "action_uri": "app:act",
+      "arguments": {
+        "n": 5,
+        "path": "/data/a.txt",
+        "s": "hello"
+      },
+      "kind": "tool_call",
+      "target": "tool",
+      "timestamp": "2026-01-05T20:00:00Z"
+    },
+    "files": {
+      "p.yaml": "cpl: \"1.0\"\nid: vector-policy\nversion: 1\ndefault: deny\nrules:\n  - {id: r, outcome: allow, when: {time.window: {from: '09:00', to: '17:00'}}}\n"
+    },
+    "policies": [
+      "p.yaml"
+    ]
+  },
+  "level": "core"
+}

@@ -1,0 +1,28 @@
+{
+  "expected": {
+    "matched_rules": [],
+    "outcome": "deny",
+    "reason_codes": [
+      "NO_MATCHING_RULE"
+    ]
+  },
+  "id": "decision/default_deny",
+  "input": {
+    "action": {
+      "action_uri": "app:act",
+      "arguments": {
+        "n": 5
+      },
+      "kind": "tool_call",
+      "target": "tool",
+      "timestamp": "2026-01-01T12:00:00Z"
+    },
+    "files": {
+      "p.yaml": "cpl: \"1.0\"\nid: vector-policy\nversion: 1\ndefault: deny\nrules:\n  - id: allow-read\n    match: {kind: [retrieval]}\n    outcome: allow\n"
+    },
+    "policies": [
+      "p.yaml"
+    ]
+  },
+  "level": "core"
+}

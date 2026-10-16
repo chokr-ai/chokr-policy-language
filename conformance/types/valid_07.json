@@ -1,0 +1,10 @@
+{
+  "expected": {
+    "canonical": "list<string>"
+  },
+  "id": "types/valid_07",
+  "input": {
+    "type": "list<string>"
+  },
+  "level": "core"
+}

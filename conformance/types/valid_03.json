@@ -1,0 +1,10 @@
+{
+  "expected": {
+    "canonical": "boolean"
+  },
+  "id": "types/valid_03",
+  "input": {
+    "type": "boolean"
+  },
+  "level": "core"
+}

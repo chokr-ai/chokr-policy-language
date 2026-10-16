@@ -1,0 +1,125 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  UV_FROZEN: "1"
+
+jobs:
+  quality:
+    name: lint, format, types, boundaries
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
+      - uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86  # v5
+        with:
+          python-version: "3.12"
+          enable-cache: true
+      - run: uv sync --all-groups --all-extras
+      - name: Lint
+        run: uv run ruff check .
+      - name: Format
+        run: uv run ruff format --check .
+      - name: Types
+        run: uv run mypy
+      - name: Import boundaries
+        run: uv run lint-imports
+      - name: Example policies are clean
+        run: |
+          uv run cplang policy check examples/access
+          uv run cplang policy check examples/agent_tool_call
+      - name: Example policies and declarations are formatted
+        run: |
+          uv run cplang policy fmt --check examples
+          uv run cplang decl fmt --check examples
+      - name: Registry export is current
+        run: uv run python tools/export_registry.py --check
+      - name: Lock file is current
+        run: uv lock --check
+        env:
+          UV_FROZEN: "0"
+
+  audit:
+    name: dependency audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
+      - uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86  # v5
+        with:
+          python-version: "3.12"
+      - run: uv sync --all-groups --all-extras
+      - name: Known vulnerabilities in the locked dependencies
+        run: |
+          uv export --no-dev --all-extras --no-emit-project --format requirements-txt -o requirements.audit.txt
+          uv run pip-audit --requirement requirements.audit.txt --disable-pip --no-deps
+
+  test:
+    name: test (${{ matrix.os }}, python ${{ matrix.python }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.12", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
+      - uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86  # v5
+        with:
+          python-version: ${{ matrix.python }}
+          enable-cache: true
+      - run: uv sync --all-groups --all-extras
+      - name: Tests with branch coverage (the gate is in pyproject.toml)
+        run: uv run pytest --cov
+      - name: Conformance vectors
+        run: uv run cplang conformance --report conformance-report.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4
+        with:
+          name: conformance-report-${{ matrix.os }}-py${{ matrix.python }}
+          path: conformance-report.json
+
+  package:
+    name: build and install the wheel
+    runs-on: ubuntu-latest
+    needs: [quality, test]
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
+      - uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86  # v5
+        with:
+          python-version: "3.12"
+      - run: uv build
+      - name: Distribution metadata is valid
+        run: uvx twine check dist/*
+      - name: The wheel installs in a clean environment and carries its conformance vectors
+        run: |
+          uv venv /tmp/clean
+          uv pip install --python /tmp/clean/bin/python dist/*.whl
+          cd "$(mktemp -d)"
+          /tmp/clean/bin/cplang --version
+          /tmp/clean/bin/cplang conformance
+      - name: A consumer type-checks strictly against the installed wheel
+        run: |
+          uv pip install --python /tmp/clean/bin/python mypy
+          /tmp/clean/bin/python -m mypy --strict examples/embedding/embed.py
+      - name: The sdist builds a wheel on its own
+        run: |
+          uv venv /tmp/sdist
+          uv pip install --python /tmp/sdist/bin/python dist/*.tar.gz
+          /tmp/sdist/bin/cplang --version
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4
+        with:
+          name: dist
+          path: dist/*

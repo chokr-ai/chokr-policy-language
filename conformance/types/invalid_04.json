@@ -1,0 +1,10 @@
+{
+  "expected": {
+    "error": "TYPE_ERROR"
+  },
+  "id": "types/invalid_04",
+  "input": {
+    "type": "nonsense"
+  },
+  "level": "core"
+}

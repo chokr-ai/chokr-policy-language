@@ -1,0 +1,26 @@
+{
+  "expected": {
+    "absent": false,
+    "static_type": "boolean",
+    "type": "boolean",
+    "value": false
+  },
+  "id": "expressions/valid_21",
+  "input": {
+    "arguments": {
+      "m": {
+        "k": 1
+      },
+      "n": 5,
+      "s": "hello",
+      "text": "a,b",
+      "xs": [
+        1,
+        2,
+        3
+      ]
+    },
+    "expression": "5 in [1, 2, 3]"
+  },
+  "level": "core"
+}

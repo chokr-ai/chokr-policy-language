@@ -1,0 +1,42 @@
+{
+  "expected": {
+    "matched_rules": [
+      "r"
+    ],
+    "outcome": "deny",
+    "reason_codes": [
+      "RULE_DENY"
+    ]
+  },
+  "id": "decision/signal_count_gate",
+  "input": {
+    "action": {
+      "action_uri": "app:act",
+      "arguments": {
+        "n": 5,
+        "path": "/data/a.txt",
+        "s": "hello"
+      },
+      "kind": "tool_call",
+      "target": "tool",
+      "timestamp": "2026-01-05T10:00:00Z"
+    },
+    "files": {
+      "p.yaml": "cpl: \"1.0\"\nid: vector-policy\nversion: 1\ndefault: allow\nrules:\n  - {id: r, outcome: deny, reason: RULE_DENY, when: {signal: {code: scan.finding, count_gte: 2}}}\n"
+    },
+    "policies": [
+      "p.yaml"
+    ],
+    "signals": [
+      {
+        "code": "scan.finding",
+        "source": "a"
+      },
+      {
+        "code": "scan.finding",
+        "source": "b"
+      }
+    ]
+  },
+  "level": "core"
+}

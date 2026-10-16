@@ -1,0 +1,7 @@
+schema: cpl.declarations/1.0
+namespace: example.access
+version: 1
+parameters:
+  max_upload_kb:
+    type: integer
+    default: 512

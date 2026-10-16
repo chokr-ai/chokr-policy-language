@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cpl.action/1.0",
+  "title": "CPL action",
+  "description": "The input of an evaluation: one thing about to happen. Only `timestamp` is required; hosts add their own keys.",
+  "type": "object",
+  "required": ["timestamp"],
+  "properties": {
+    "id": {"type": "string"},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "kind": {"type": "string"},
+    "action_uri": {"type": "string"},
+    "target": {"type": ["string", "object"]},
+    "arguments": {"type": "object"},
+    "attributes": {"type": "object"},
+    "attribute_sources": {"type": "object", "additionalProperties": {"type": "string"}}
+  }
+}

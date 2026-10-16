@@ -1,0 +1,23 @@
+schema: cpl.fixtures/1.0
+now: "2026-01-05T10:00:00Z"
+cases:
+  - name: search-is-allowed
+    action: {kind: tool_call, arguments: {tool: web_search}}
+    expect: {outcome: allow, matched_rules: [read-only-tools]}
+
+  - name: small-payment-is-allowed
+    action: {kind: tool_call, arguments: {tool: send_payment, amount: 40}}
+    expect: {outcome: allow, matched_rules: [small-payments]}
+
+  - name: large-payment-asks-a-human
+    action: {kind: tool_call, arguments: {tool: send_payment, amount: 5000}}
+    expect: {outcome: ask, reason_codes: [RULE_ASK]}
+
+  - name: unknown-tool-is-denied
+    action: {kind: tool_call, arguments: {tool: delete_database}}
+    expect: {outcome: deny, reason_codes: [NO_MATCHING_RULE]}
+
+  - name: injection-overrides-everything
+    action: {kind: tool_call, arguments: {tool: web_search}}
+    signals: [{code: prompt.injection, severity: high}]
+    expect: {outcome: deny, matched_rules: [prompt-injection-suspected, read-only-tools]}

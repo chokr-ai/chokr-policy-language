@@ -1,0 +1,37 @@
+{
+  "expected": {
+    "matched_rules": [],
+    "outcome": "allow",
+    "reason_codes": [
+      "NO_MATCHING_RULE"
+    ]
+  },
+  "id": "decision/signal_severity_gate",
+  "input": {
+    "action": {
+      "action_uri": "app:act",
+      "arguments": {
+        "n": 5,
+        "path": "/data/a.txt",
+        "s": "hello"
+      },
+      "kind": "tool_call",
+      "target": "tool",
+      "timestamp": "2026-01-05T10:00:00Z"
+    },
+    "files": {
+      "p.yaml": "cpl: \"1.0\"\nid: vector-policy\nversion: 1\ndefault: allow\nrules:\n  - {id: r, outcome: deny, reason: RULE_DENY, when: {signal: {code: scan.finding, severity_gte: critical}}}\n"
+    },
+    "policies": [
+      "p.yaml"
+    ],
+    "signals": [
+      {
+        "code": "scan.finding",
+        "severity": "low",
+        "source": "checker"
+      }
+    ]
+  },
+  "level": "core"
+}

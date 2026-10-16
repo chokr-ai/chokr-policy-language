@@ -1,0 +1,26 @@
+{
+  "expected": {
+    "absent": false,
+    "static_type": "integer",
+    "type": "integer",
+    "value": 9
+  },
+  "id": "expressions/valid_01",
+  "input": {
+    "arguments": {
+      "m": {
+        "k": 1
+      },
+      "n": 5,
+      "s": "hello",
+      "text": "a,b",
+      "xs": [
+        1,
+        2,
+        3
+      ]
+    },
+    "expression": "(1 + 2) * 3"
+  },
+  "level": "core"
+}

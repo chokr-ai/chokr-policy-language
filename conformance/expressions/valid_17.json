@@ -1,0 +1,26 @@
+{
+  "expected": {
+    "absent": false,
+    "static_type": "integer",
+    "type": "integer",
+    "value": 5
+  },
+  "id": "expressions/valid_17",
+  "input": {
+    "arguments": {
+      "m": {
+        "k": 1
+      },
+      "n": 5,
+      "s": "hello",
+      "text": "a,b",
+      "xs": [
+        1,
+        2,
+        3
+      ]
+    },
+    "expression": "size(arguments.s)"
+  },
+  "level": "core"
+}

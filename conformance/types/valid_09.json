@@ -1,0 +1,10 @@
+{
+  "expected": {
+    "canonical": "map<string,number>"
+  },
+  "id": "types/valid_09",
+  "input": {
+    "type": "map<string,number>"
+  },
+  "level": "core"
+}

@@ -1,0 +1,10 @@
+{
+  "expected": {
+    "canonical": "any"
+  },
+  "id": "types/valid_06",
+  "input": {
+    "type": "any"
+  },
+  "level": "core"
+}

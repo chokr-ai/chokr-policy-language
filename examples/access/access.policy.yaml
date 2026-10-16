@@ -1,0 +1,46 @@
+cpl: "1.0"
+id: document-access
+version: 1
+imports:
+  - {from: ./limits.decl.yaml}
+default: deny
+rules:
+  - id: read-public
+    description: Anyone may read public documents.
+    match: {kind: [read]}
+    when: {resource.type: public}
+    outcome: allow
+
+  - id: read-internal-staff
+    match: {kind: [read]}
+    when:
+      resource.type: internal
+      actor.type: [staff, admin]
+    outcome: allow
+
+  - id: write-within-quota
+    match: {kind: [write]}
+    when:
+      actor.type: [staff, admin]
+      expr: "arguments.size_kb <= param.max_upload_kb"
+    outcome: allow
+
+  - id: write-large-needs-approval
+    match: {kind: [write]}
+    when:
+      actor.type: [staff, admin]
+      expr: "arguments.size_kb > param.max_upload_kb"
+      approval: {timeout_seconds: 3600}
+    outcome: ask
+
+  - id: no-delete-outside-hours
+    match: {kind: [delete]}
+    when:
+      not: {time.window: {from: "08:00", to: "18:00", days: [mon, tue, wed, thu, fri]}}
+    outcome: deny
+    reason: RULE_DENY
+
+  - id: malware-found
+    when: {signal: {code: scan.malware, severity_gte: high}}
+    outcome: deny
+    reason: RULE_DENY

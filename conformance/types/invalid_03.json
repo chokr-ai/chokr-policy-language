@@ -1,0 +1,10 @@
+{
+  "expected": {
+    "error": "TYPE_ERROR"
+  },
+  "id": "types/invalid_03",
+  "input": {
+    "type": "map<string>"
+  },
+  "level": "core"
+}

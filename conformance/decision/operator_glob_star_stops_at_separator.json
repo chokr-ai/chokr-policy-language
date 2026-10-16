@@ -1,0 +1,30 @@
+{
+  "expected": {
+    "matched_rules": [],
+    "outcome": "deny",
+    "reason_codes": [
+      "NO_MATCHING_RULE"
+    ]
+  },
+  "id": "decision/operator_glob_star_stops_at_separator",
+  "input": {
+    "action": {
+      "action_uri": "app:act",
+      "arguments": {
+        "n": 5,
+        "path": "/data/x/y.txt",
+        "s": "hello"
+      },
+      "kind": "tool_call",
+      "target": "tool",
+      "timestamp": "2026-01-05T10:00:00Z"
+    },
+    "files": {
+      "p.yaml": "cpl: \"1.0\"\nid: vector-policy\nversion: 1\ndefault: deny\nrules:\n  - {id: r, outcome: allow, when: {arguments.path: {glob: '/data/*', sep: '/'}}}\n"
+    },
+    "policies": [
+      "p.yaml"
+    ]
+  },
+  "level": "core"
+}

@@ -1,0 +1,15 @@
+{
+  "expected": {
+    "error": "IMPORT_NOT_FOUND"
+  },
+  "id": "imports/missing_file",
+  "input": {
+    "entries": [
+      "b.decl.yaml"
+    ],
+    "files": {
+      "b.decl.yaml": "schema: cpl.declarations/1.0\nnamespace: demo.b\nversion: 1\nimports:\n  - {from: ./a.decl.yaml}\nconstants:\n  top: {type: integer, value: 3}\n"
+    }
+  },
+  "level": "core"
+}

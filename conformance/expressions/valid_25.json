@@ -1,0 +1,29 @@
+{
+  "expected": {
+    "absent": false,
+    "static_type": "list<integer>",
+    "type": "list",
+    "value": [
+      2,
+      4
+    ]
+  },
+  "id": "expressions/valid_25",
+  "input": {
+    "arguments": {
+      "m": {
+        "k": 1
+      },
+      "n": 5,
+      "s": "hello",
+      "text": "a,b",
+      "xs": [
+        1,
+        2,
+        3
+      ]
+    },
+    "expression": "filter([1, 2, 3, 4], it % 2 == 0)"
+  },
+  "level": "core"
+}

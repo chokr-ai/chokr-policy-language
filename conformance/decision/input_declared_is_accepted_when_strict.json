@@ -1,0 +1,30 @@
+{
+  "expected": {
+    "matched_rules": [
+      "big-spender"
+    ],
+    "outcome": "allow",
+    "reason_codes": [
+      "POLICY_SATISFIED"
+    ]
+  },
+  "id": "decision/input_declared_is_accepted_when_strict",
+  "input": {
+    "action": {
+      "customer": {
+        "spend": 120
+      },
+      "kind": "read",
+      "timestamp": "2026-01-05T10:00:00Z"
+    },
+    "files": {
+      "d.decl.yaml": "schema: cpl.declarations/1.0\ntypes:\n  Customer: {kind: object, fields: {spend: {type: number}}}\ninputs:\n  customer: {type: Customer}\n",
+      "p.yaml": "cpl: \"1.0\"\nid: vector-policy\nversion: 1\nimports:\n  - {from: ./d.decl.yaml}\ndefault: deny\nrules:\n  - {id: big-spender, outcome: allow, when: {expr: 'customer.spend > 100'}}\n"
+    },
+    "policies": [
+      "p.yaml"
+    ],
+    "strict_inputs": true
+  },
+  "level": "core"
+}

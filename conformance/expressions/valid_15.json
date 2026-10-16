@@ -1,0 +1,26 @@
+{
+  "expected": {
+    "absent": false,
+    "static_type": "number",
+    "type": "number",
+    "value": "6.5"
+  },
+  "id": "expressions/valid_15",
+  "input": {
+    "arguments": {
+      "m": {
+        "k": 1
+      },
+      "n": 5,
+      "s": "hello",
+      "text": "a,b",
+      "xs": [
+        1,
+        2,
+        3
+      ]
+    },
+    "expression": "sum([1, 2, 3.5])"
+  },
+  "level": "core"
+}

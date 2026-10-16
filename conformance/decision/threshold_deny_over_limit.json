@@ -1,0 +1,32 @@
+{
+  "expected": {
+    "matched_rules": [
+      "r"
+    ],
+    "outcome": "deny",
+    "reason_codes": [
+      "THRESHOLD_EXCEEDED"
+    ]
+  },
+  "id": "decision/threshold_deny_over_limit",
+  "input": {
+    "action": {
+      "action_uri": "app:act",
+      "arguments": {
+        "n": 5,
+        "path": "/data/a.txt",
+        "s": "hello"
+      },
+      "kind": "tool_call",
+      "target": "tool",
+      "timestamp": "2026-01-05T10:00:00Z"
+    },
+    "files": {
+      "p.yaml": "cpl: \"1.0\"\nid: vector-policy\nversion: 1\ndefault: deny\nrules:\n  - id: r\n    outcome: allow\n    match: {kind: [tool_call]}\n    when:\n      thresholds: [{outcome: deny, path: arguments.n, gt: 4, reason: THRESHOLD_EXCEEDED}]\n"
+    },
+    "policies": [
+      "p.yaml"
+    ]
+  },
+  "level": "core"
+}

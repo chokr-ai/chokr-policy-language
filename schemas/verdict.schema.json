@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cpl.verdict/1.0",
+  "title": "CPL verdict",
+  "description": "The decision for one action.",
+  "type": "object",
+  "required": ["outcome", "matched_rules", "reasons", "reason_codes", "obligations", "policy", "input_digest"],
+  "properties": {
+    "outcome": {"enum": ["allow", "deny", "ask", "modify", "watch"]},
+    "action_id": {"type": "string"},
+    "verdict_id": {"type": "string"},
+    "matched_rules": {"type": "array", "items": {"type": "string"}},
+    "reasons": {"type": "array", "items": {"type": "object", "required": ["code"], "properties": {"code": {"type": "string"}}}},
+    "reason_codes": {"type": "array", "items": {"type": "string"}},
+    "explanation": {"type": ["string", "null"]},
+    "hint": {"type": ["object", "null"]},
+    "obligations": {"type": "array", "items": {"type": "object", "required": ["type"]}},
+    "modifications": {"type": ["object", "null"]},
+    "risk_tier": {"type": ["string", "null"]},
+    "policy": {"type": "object"},
+    "input_digest": {"type": "string", "pattern": "^(sha256:[0-9a-f]{64})?$"},
+    "would_block": {"type": "boolean"},
+    "would_have_been": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}

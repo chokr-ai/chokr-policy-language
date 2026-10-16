@@ -1,0 +1,23 @@
+{
+  "expected": {
+    "error": "TYPE_ERROR"
+  },
+  "id": "expressions/invalid_07",
+  "input": {
+    "arguments": {
+      "m": {
+        "k": 1
+      },
+      "n": 5,
+      "s": "hello",
+      "text": "a,b",
+      "xs": [
+        1,
+        2,
+        3
+      ]
+    },
+    "expression": "1 + \"a\""
+  },
+  "level": "core"
+}

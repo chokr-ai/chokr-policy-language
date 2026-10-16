@@ -1,0 +1,33 @@
+{
+  "expected": {
+    "matched_rules": [
+      "r"
+    ],
+    "outcome": "watch",
+    "reason_codes": [
+      "MONITOR_WOULD_BLOCK",
+      "RULE_DENY"
+    ]
+  },
+  "id": "decision/monitor_mode_downgrades_deny",
+  "input": {
+    "action": {
+      "action_uri": "app:act",
+      "arguments": {
+        "n": 5,
+        "path": "/data/a.txt",
+        "s": "hello"
+      },
+      "kind": "tool_call",
+      "target": "tool",
+      "timestamp": "2026-01-05T10:00:00Z"
+    },
+    "files": {
+      "p.yaml": "cpl: \"1.0\"\nid: vector-policy\nversion: 1\ndefault: deny\nmode: monitor\nrules:\n  - {id: r, outcome: deny, match: {kind: [tool_call]}}\n"
+    },
+    "policies": [
+      "p.yaml"
+    ]
+  },
+  "level": "core"
+}

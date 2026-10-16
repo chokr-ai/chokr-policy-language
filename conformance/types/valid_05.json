@@ -1,0 +1,10 @@
+{
+  "expected": {
+    "canonical": "duration"
+  },
+  "id": "types/valid_05",
+  "input": {
+    "type": "duration"
+  },
+  "level": "core"
+}

@@ -1,0 +1,15 @@
+{
+  "expected": {
+    "error": "IMPORT_FORBIDDEN"
+  },
+  "id": "imports/escape_the_root",
+  "input": {
+    "entries": [
+      "a.decl.yaml"
+    ],
+    "files": {
+      "a.decl.yaml": "schema: cpl.declarations/1.0\nnamespace: demo.b\nversion: 1\nimports:\n  - {from: ../outside.decl.yaml}\nconstants:\n  top: {type: integer, value: 3}\n"
+    }
+  },
+  "level": "core"
+}

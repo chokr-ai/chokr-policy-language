@@ -1,0 +1,26 @@
+{
+  "expected": {
+    "absent": true,
+    "static_type": "unknown",
+    "type": "absent",
+    "value": null
+  },
+  "id": "expressions/valid_34",
+  "input": {
+    "arguments": {
+      "m": {
+        "k": 1
+      },
+      "n": 5,
+      "s": "hello",
+      "text": "a,b",
+      "xs": [
+        1,
+        2,
+        3
+      ]
+    },
+    "expression": "arguments.missing"
+  },
+  "level": "core"
+}

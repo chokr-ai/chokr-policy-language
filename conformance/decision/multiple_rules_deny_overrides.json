@@ -1,0 +1,36 @@
+{
+  "expected": {
+    "matched_rules": [
+      "a",
+      "b",
+      "c"
+    ],
+    "outcome": "deny",
+    "reason_codes": [
+      "RULE_DENY",
+      "POLICY_ADVISORY",
+      "POLICY_SATISFIED"
+    ]
+  },
+  "id": "decision/multiple_rules_deny_overrides",
+  "input": {
+    "action": {
+      "action_uri": "app:act",
+      "arguments": {
+        "n": 5,
+        "path": "/data/a.txt",
+        "s": "hello"
+      },
+      "kind": "tool_call",
+      "target": "tool",
+      "timestamp": "2026-01-05T10:00:00Z"
+    },
+    "files": {
+      "p.yaml": "cpl: \"1.0\"\nid: vector-policy\nversion: 1\ndefault: deny\nrules:\n  - {id: a, outcome: allow, match: {kind: [tool_call]}}\n  - {id: b, outcome: watch, match: {kind: [tool_call]}}\n  - {id: c, outcome: deny, match: {action_uri: ['app:*']}}\n"
+    },
+    "policies": [
+      "p.yaml"
+    ]
+  },
+  "level": "core"
+}

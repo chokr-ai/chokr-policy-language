@@ -1,0 +1,15 @@
+{
+  "expected": {
+    "error": "DECLARATION_INVALID"
+  },
+  "id": "declarations/duplicate_key",
+  "input": {
+    "entries": [
+      "a.decl.yaml"
+    ],
+    "files": {
+      "a.decl.yaml": "schema: cpl.declarations/1.0\nnamespace: demo.a\nversion: 1\nparameters:\n  limit: {type: integer, default: 10}\n  names: {type: \"list<string>\", default: [alpha, beta]}\nversion: 2\n"
+    }
+  },
+  "level": "core"
+}

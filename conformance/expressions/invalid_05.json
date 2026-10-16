@@ -1,0 +1,23 @@
+{
+  "expected": {
+    "error": "EXPRESSION_SYNTAX"
+  },
+  "id": "expressions/invalid_05",
+  "input": {
+    "arguments": {
+      "m": {
+        "k": 1
+      },
+      "n": 5,
+      "s": "hello",
+      "text": "a,b",
+      "xs": [
+        1,
+        2,
+        3
+      ]
+    },
+    "expression": "\"unterminated"
+  },
+  "level": "core"
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cpl.fixtures/1.0",
+  "title": "CPL fixture file",
+  "type": "object",
+  "required": ["schema", "cases"],
+  "properties": {
+    "schema": {"const": "cpl.fixtures/1.0"},
+    "description": {"type": "string"},
+    "policy": {"type": "string"},
+    "params": {"type": "object"},
+    "now": {"type": "string"},
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "expect"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "description": {"type": "string"},
+          "action": {"type": "object"},
+          "signals": {"type": "array", "items": {"type": "object", "required": ["code"]}},
+          "signals_from": {"type": "array", "items": {"type": "string"}},
+          "expect": {"type": "object", "minProperties": 1}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

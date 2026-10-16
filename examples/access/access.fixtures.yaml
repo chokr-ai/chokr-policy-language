@@ -1,0 +1,35 @@
+schema: cpl.fixtures/1.0
+now: "2026-01-05T10:00:00Z"   # a Monday, inside office hours
+cases:
+  - name: anyone-reads-public
+    action: {kind: read, resource: {type: public}, actor: {type: guest}}
+    expect: {outcome: allow, matched_rules: [read-public]}
+
+  - name: guests-cannot-read-internal
+    action: {kind: read, resource: {type: internal}, actor: {type: guest}}
+    expect: {outcome: deny, reason_codes: [NO_MATCHING_RULE]}
+
+  - name: staff-read-internal
+    action: {kind: read, resource: {type: internal}, actor: {type: staff}}
+    expect: {outcome: allow}
+
+  - name: small-write
+    action: {kind: write, actor: {type: staff}, arguments: {size_kb: 100}}
+    expect: {outcome: allow, matched_rules: [write-within-quota]}
+
+  - name: large-write-asks
+    action: {kind: write, actor: {type: staff}, arguments: {size_kb: 900}}
+    expect: {outcome: ask, reason_codes: [RULE_ASK]}
+
+  - name: delete-is-refused-at-night
+    action: {kind: delete, timestamp: "2026-01-05T23:00:00Z"}
+    expect: {outcome: deny, reason_codes: [RULE_DENY]}
+
+  - name: delete-in-hours-has-no-rule
+    action: {kind: delete}
+    expect: {outcome: deny, reason_codes: [NO_MATCHING_RULE]}
+
+  - name: malware-overrides-everything
+    action: {kind: read, resource: {type: public}}
+    signals: [{code: scan.malware, severity: critical}]
+    expect: {outcome: deny, matched_rules: [malware-found, read-public]}
