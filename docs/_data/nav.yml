@@ -1,0 +1,41 @@
+- label: Get Started
+  items:
+    - {title: Quickstart, url: /quickstart/}
+    - {title: Installation, url: /installation/}
+    - {title: Basics, url: /basics/}
+- label: Guides
+  items:
+    - {title: Rules, url: /rules/}
+    - {title: Conditions, url: /conditions/}
+    - {title: Matching, url: /matching/}
+    - {title: Expressions, url: /expressions/}
+    - {title: Signals, url: /signals/}
+    - {title: Approvals, url: /approvals/}
+    - {title: Limits and Guards, url: /limits/}
+    - {title: Modifying Actions, url: /modifying/}
+    - {title: Combining Rules, url: /decisions/}
+    - {title: Declarations, url: /declarations/}
+    - {title: Types, url: /types/}
+    - {title: Imports, url: /imports/}
+    - {title: Testing Policies, url: /testing/}
+    - {title: Embedding, url: /embedding/}
+- label: Use Cases
+  items:
+    - {title: Agent Tool Calls, url: /use-cases/agent-tools/}
+    - {title: Shell Commands, url: /use-cases/shell-commands/}
+    - {title: File Access, url: /use-cases/file-access/}
+    - {title: Network Access, url: /use-cases/network-access/}
+    - {title: Payments, url: /use-cases/payments/}
+    - {title: Data Redaction, url: /use-cases/data-redaction/}
+    - {title: Safe Rollout, url: /use-cases/rollout/}
+- label: Reference
+  items:
+    - {title: Policy File, url: /reference/policy-file/}
+    - {title: Conditions, url: /reference/conditions/}
+    - {title: Expressions, url: /reference/expressions/}
+    - {title: Action, url: /reference/action/}
+    - {title: Verdict, url: /reference/verdict/}
+    - {title: Command Line, url: /reference/cli/}
+    - {title: Python API, url: /reference/python-api/}
+    - {title: Error Codes, url: /reference/errors/}
+    - {title: Cheatsheet, url: /reference/cheatsheet/}
