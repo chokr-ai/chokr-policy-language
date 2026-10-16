@@ -17,7 +17,7 @@ env:
 
 jobs:
   quality:
-    name: lint, format, types, boundaries
+    name: lint, format, types, docs, audit
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -43,23 +43,14 @@ jobs:
         run: |
           uv run cplang policy fmt --check examples
           uv run cplang decl fmt --check examples
+      - name: Documentation examples match the engine
+        run: uv run python tools/check_docs.py
       - name: Registry export is current
         run: uv run python tools/export_registry.py --check
       - name: Lock file is current
         run: uv lock --check
         env:
           UV_FROZEN: "0"
-
-  audit:
-    name: dependency audit
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
-      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884  # v10.3.0
-        with:
-          python-version: "3.12"
-      - run: uv sync --all-groups --all-extras
       - name: Known vulnerabilities in the locked dependencies
         run: |
           uv export --no-dev --all-extras --no-emit-project --format requirements-txt -o requirements.audit.txt
@@ -72,8 +63,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        # Every Python on Linux; one Python on the platforms that bill at a higher rate.
+        os: [ubuntu-latest]
         python: ["3.12", "3.13", "3.14"]
+        include:
+          - {os: windows-latest, python: "3.12"}
+          - {os: macos-latest, python: "3.12"}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
       - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884  # v10.3.0

@@ -1,0 +1,25 @@
+title: CHOKR Policy Language
+description: Write rules as data, test them offline and get a verdict for every action an AI agent or program is about to take.
+lang: en
+permalink: pretty
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    guess_lang: false
+github_url: https://github.com/chokr-ai/chokr-policy-language
+plugins:
+  - jekyll-sitemap
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - node_modules
+  - README.md
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: doc

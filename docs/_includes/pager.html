@@ -1,0 +1,27 @@
+{%- assign flat = "" | split: "" -%}
+{%- for group in site.data.nav -%}
+  {%- for item in group.items -%}
+    {%- assign flat = flat | push: item -%}
+  {%- endfor -%}
+{%- endfor -%}
+{%- assign prev = nil -%}
+{%- assign next = nil -%}
+{%- for item in flat -%}
+  {%- if item.url == page.url -%}
+    {%- assign i = forloop.index0 -%}
+    {%- assign j = i | minus: 1 -%}
+    {%- assign k = i | plus: 1 -%}
+    {%- if j >= 0 -%}{%- assign prev = flat[j] -%}{%- endif -%}
+    {%- if k < flat.size -%}{%- assign next = flat[k] -%}{%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if prev or next %}
+<nav class="pager" aria-label="Pagination">
+  {%- if prev %}
+  <a class="pager-prev" href="{{ prev.url | relative_url }}" rel="prev"><span>Previous</span><strong>{{ prev.title }}</strong></a>
+  {%- else %}<span></span>{%- endif %}
+  {%- if next %}
+  <a class="pager-next" href="{{ next.url | relative_url }}" rel="next"><span>Next</span><strong>{{ next.title }}</strong></a>
+  {%- endif %}
+</nav>
+{%- endif %}
