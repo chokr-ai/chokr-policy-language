@@ -10,7 +10,8 @@ description = "CHOKR Policy Language (CPL): AI agent governance as code. A deter
 requires-python = ">=3.14"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
-authors = [{ name = "chokr-ai" }]
+authors = [{ name = "Nitin Saxena" }]
+maintainers = [{ name = "chokr-ai" }]
 keywords = [
   "ai-governance", "agent-governance", "ai-agents", "agentic-ai", "guardrails", "policy-as-code", "policy-engine",
   "policy-language", "authorization", "human-in-the-loop", "audit-trail", "fail-closed", "deterministic", "chokr",
