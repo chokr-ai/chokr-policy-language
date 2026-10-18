@@ -76,3 +76,11 @@ def test_a_host_root_is_readable_in_expressions(project: Project) -> None:
 def test_the_profile_is_part_of_the_evaluator_not_the_language(project: Project) -> None:
     policy = project.policy(HEAD + "rules:\n  - {id: r, outcome: allow}\n")
     assert RuleEvaluator(policy, profile=PROFILE).evaluate(make_env(), []).outcome == "allow"
+
+
+def test_a_host_root_with_a_provider_is_computed_for_every_decision(project: Project) -> None:
+    profile = Profile(roots={"tier": lambda view: "gold" if view.wire["arguments"].get("n", 0) > 5 else "basic"})
+    text = HEAD + "rules:\n  - {id: r, outcome: deny, when: {expr: \"tier == 'gold'\"}}\n"
+    ev = RuleEvaluator(project.policy(text, profile=profile), profile=profile)
+    assert ev.evaluate(make_env({"n": 9}), []).outcome == "deny"
+    assert ev.evaluate(make_env({"n": 1}), []).outcome == "allow"
