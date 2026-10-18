@@ -323,7 +323,7 @@ def _format_ok(fmt: str, text: str) -> bool:
             return True
         if fmt == "semver":
             return bool(_SEMVER.fullmatch(text))
-    except (ValueError, EvalError):
+    except ValueError, EvalError:
         return False
     return False
 

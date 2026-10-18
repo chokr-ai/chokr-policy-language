@@ -5,7 +5,7 @@ description: Install the library and the cplang command, add the optional prover
 
 The package provides the Python library `cplang` and the `cplang` command. This page covers every way to install it and what each one needs.
 
-The language requires Python 3.12 or newer. Check your version before continuing:
+The language requires Python 3.14 or newer. Check your version before continuing:
 
 ```console
 $ python --version
