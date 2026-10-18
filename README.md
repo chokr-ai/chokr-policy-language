@@ -11,11 +11,13 @@ an agent's tool call, and returns a decision: `allow`, `ask` (human approval), `
 
 Use it when a program must make allow/deny style decisions that other people need to read, review or change, and the
 decisions must be deterministic, testable and auditable. CPL is a library and a command line tool; your application
-asks for a verdict and acts on it. Typical uses: tool-call authorization, human-in-the-loop approval, spend and rate
-limits, data-access control, and audit with replay. It works with any agent framework or tool-calling protocol,
+asks for a verdict and acts on it. Typical uses: tool-call authorization (including MCP tool servers), human-in-the-loop
+approval, deny-by-default and least-privilege access for agents, spend and rate limits, data-access control and
+redaction, and audit with replay. It works with any agent framework or tool-calling protocol,
 including MCP, because it only sees the action you hand it.
 
-CPL decides; it does not enforce. It does not sandbox or intercept anything, so your application must act on the verdict.
+CPL decides; it does not enforce. It is the policy decision point: it does not sandbox or intercept anything, so your
+application (the enforcement point) must act on the verdict.
 
 Status: alpha (0.0.x). The language and the Python API may change before 1.0.
 

@@ -16,6 +16,8 @@ keywords = [
   "ai-governance", "agent-governance", "ai-agents", "agentic-ai", "guardrails", "policy-as-code", "policy-engine",
   "policy-language", "authorization", "human-in-the-loop", "audit-trail", "fail-closed", "deterministic", "chokr",
   "llm-guardrails", "agent-security", "ai-safety", "mcp", "tool-calling",
+  "deny-by-default", "least-privilege", "zero-trust", "policy-decision-point", "mcp-authorization",
+  "tool-call-authorization", "data-redaction", "declarative",
 ]
 classifiers = [
   "Development Status :: 3 - Alpha",
