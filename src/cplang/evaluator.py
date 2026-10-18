@@ -157,7 +157,7 @@ class RuleEvaluator:
         result: bool = False,
     ) -> Verdict:
         p = self.policy
-        view = InputView(action, signals, p.decls)
+        view = InputView(action, signals, p.decls, self._profile)
         view.validate_inputs()
         ctx = Ctx(view, p.limits, trace=trace)
         contributions: list[Contribution] = self._step_zero(view, p.mode == "monitor")

@@ -8,6 +8,8 @@ dynamic = ["version"]
 readme = "README.md"
 description = "CHOKR Policy Language (CPL): AI agent governance as code. A deterministic policy language and engine for tool-call authorization, human approval and audit."
 requires-python = ">=3.12"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
 authors = [{ name = "chokr-ai" }]
 keywords = [
   "ai-governance", "agent-governance", "ai-agents", "agentic-ai", "guardrails", "policy-as-code", "policy-engine",
