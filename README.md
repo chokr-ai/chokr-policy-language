@@ -154,3 +154,7 @@ print(verdict.outcome, verdict.reason_codes, verdict.matched_rules)
 from expressions. `verdict.to_wire()` returns JSON-compatible data. The package is fully typed.
 
 More examples: [`examples/agent_tool_call`](https://github.com/chokr-ai/chokr-policy-language/tree/main/examples/agent_tool_call) and [`examples/access`](https://github.com/chokr-ai/chokr-policy-language/tree/main/examples/access).
+
+## License
+
+Apache License 2.0. Copyright 2026 chokr-ai. See [LICENSE](https://github.com/chokr-ai/chokr-policy-language/blob/main/LICENSE) and [NOTICE](https://github.com/chokr-ai/chokr-policy-language/blob/main/NOTICE).
