@@ -1,5 +1,10 @@
 # CHOKR Policy Language (CPL): AI agent governance as code
 
+[![PyPI](https://img.shields.io/pypi/v/chokr-policy-language)](https://pypi.org/project/chokr-policy-language/)
+[![Python](https://img.shields.io/pypi/pyversions/chokr-policy-language)](https://pypi.org/project/chokr-policy-language/)
+[![CI](https://github.com/chokr-ai/chokr-policy-language/actions/workflows/ci.yml/badge.svg)](https://github.com/chokr-ai/chokr-policy-language/actions/workflows/ci.yml)
+[![License](https://img.shields.io/pypi/l/chokr-policy-language)](https://github.com/chokr-ai/chokr-policy-language/blob/main/LICENSE)
+
 CPL is a small, declarative policy-as-code language for governing what AI agents and other programs may do. You write the rules
 as data in a YAML (or JSON) file; CPL evaluates them against a description of something that is about to happen, such as
 an agent's tool call, and returns a decision: `allow`, `ask` (human approval), `deny` and more.
