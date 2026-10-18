@@ -10,6 +10,10 @@ asks for a verdict and acts on it. Typical uses: tool-call authorization, human-
 limits, data-access control, and audit with replay. It works with any agent framework or tool-calling protocol,
 including MCP, because it only sees the action you hand it.
 
+CPL decides; it does not enforce. It does not sandbox or intercept anything, so your application must act on the verdict.
+
+Status: alpha (0.0.x). The language and the Python API may change before 1.0.
+
 ## Example: govern an AI agent's tool calls
 
 ```yaml
@@ -32,6 +36,8 @@ rules:
     outcome: ask
 ```
 
+From a clone of this repository, run its test cases:
+
 ```console
 $ cplang test --policy examples/agent_tool_call --fixtures examples/agent_tool_call/agent.fixtures.yaml
 ```
@@ -40,9 +46,11 @@ The full policy and its test cases are in [`examples/agent_tool_call`](https://g
 
 ## Install
 
-```
+```bash
 pip install chokr-policy-language            # library and the `cplang` command
 pip install "chokr-policy-language[prove]"   # adds the optional prover
+uv add chokr-policy-language                 # or add it to a uv project
+pipx install chokr-policy-language           # or the command line tool only
 ```
 
 Python 3.12 or newer. Import name: `cplang`.
@@ -154,6 +162,10 @@ print(verdict.outcome, verdict.reason_codes, verdict.matched_rules)
 from expressions. `verdict.to_wire()` returns JSON-compatible data. The package is fully typed.
 
 More examples: [`examples/agent_tool_call`](https://github.com/chokr-ai/chokr-policy-language/tree/main/examples/agent_tool_call) and [`examples/access`](https://github.com/chokr-ai/chokr-policy-language/tree/main/examples/access).
+
+## Contributing and security
+
+See [CONTRIBUTING.md](https://github.com/chokr-ai/chokr-policy-language/blob/main/CONTRIBUTING.md). Report vulnerabilities privately as described in [SECURITY.md](https://github.com/chokr-ai/chokr-policy-language/blob/main/SECURITY.md), not in public issues.
 
 ## License
 
