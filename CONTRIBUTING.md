@@ -4,7 +4,7 @@ Issues and pull requests are welcome. For a larger change, open an issue first s
 
 ## Set up
 
-Python 3.12 or newer and [uv](https://docs.astral.sh/uv/).
+Python 3.14 or newer and [uv](https://docs.astral.sh/uv/).
 
 ```bash
 uv sync --all-groups --all-extras

@@ -53,7 +53,7 @@ uv add chokr-policy-language                 # or add it to a uv project
 pipx install chokr-policy-language           # or the command line tool only
 ```
 
-Python 3.12 or newer. Import name: `cplang`.
+Python 3.14 or newer. Import name: `cplang`.
 
 ## Concepts
 
