@@ -205,7 +205,7 @@ class Encoder:
                 raise Unsupported("unsupported_policy_shape", f"var.{name} is not modeled")
             return self.operand(self.lets[name], hint)
         if node.k == "path" and node.op and node.op in self.decls.types and self.decls.types[node.op].kind == "enum":
-            return z3.StringVal(str(node.args[0])), z3.BoolVal(True), "string"
+            return _string(str(node.args[0])), z3.BoolVal(True), "string"
         if node.k == "path":
             name = self.path_name(node)
             sort = self.sort_of(name, hint)
@@ -227,9 +227,9 @@ class Encoder:
         if isinstance(value, int | Decimal):
             return z3.RealVal(str(value)), z3.BoolVal(True), "real"
         if isinstance(value, str):
-            return z3.StringVal(value), z3.BoolVal(True), "string"
+            return _string(value), z3.BoolVal(True), "string"
         if isinstance(value, EnumVal):
-            return z3.StringVal(value.name), z3.BoolVal(True), "string"
+            return _string(value.name), z3.BoolVal(True), "string"
         if isinstance(value, Quantity | list | SetVal | dict):
             raise Unsupported("unsupported_policy_shape", "structured constants are not modeled")
         raise Unsupported("unsupported_policy_shape", "unknown constant type")
@@ -327,9 +327,9 @@ class Encoder:
                     raise Unsupported("unsupported_policy_shape", "normalized or case-insensitive globs")
                 cond = z3.InRe(a, _glob_regex(pattern, node.opts.get("sep")))
             elif op == "contains":
-                cond = z3.Contains(a, z3.StringVal(pattern))
+                cond = z3.Contains(a, _string(pattern))
             else:
-                cond = z3.PrefixOf(z3.StringVal(pattern), a)
+                cond = z3.PrefixOf(_string(pattern), a)
             return z3.And(pa, cond), z3.And(pa, z3.Not(cond))
         if op in ("len_gt", "len_lt"):
             n = self.const_value(node.args[1])
@@ -443,13 +443,13 @@ def _reject_conflicting_modifies(rules: list[CRule]) -> None:
 def _glob_regex(pattern: str, sep: str | None) -> Any:
     """A glob as a z3 regular expression (same syntax as the evaluator: `*`, `?`, classes, `**` with a separator)."""
     any_char = z3.AllChar(z3.ReSort(z3.StringSort()))
-    plain = any_char if sep is None else z3.Intersect(any_char, z3.Complement(z3.Re(z3.StringVal(sep))))
+    plain = any_char if sep is None else z3.Intersect(any_char, z3.Complement(z3.Re(_string(sep))))
     parts: list[Any] = []
     i = 0
     while i < len(pattern):
         c = pattern[i]
         if c == "\\" and i + 1 < len(pattern):
-            parts.append(z3.Re(z3.StringVal(pattern[i + 1])))
+            parts.append(z3.Re(_string(pattern[i + 1])))
             i += 2
         elif c == "*":
             j = i
@@ -463,7 +463,7 @@ def _glob_regex(pattern: str, sep: str | None) -> Any:
         elif c == "[":
             end = pattern.find("]", i + 2)
             if end < 0:
-                parts.append(z3.Re(z3.StringVal(c)))
+                parts.append(z3.Re(_string(c)))
                 i += 1
                 continue
             body = pattern[i + 1 : end]
@@ -476,15 +476,15 @@ def _glob_regex(pattern: str, sep: str | None) -> Any:
                     members.append(z3.Range(body[k], body[k + 2]))
                     k += 3
                 else:
-                    members.append(z3.Re(z3.StringVal(body[k])))
+                    members.append(z3.Re(_string(body[k])))
                     k += 1
             union = z3.Union(*members) if len(members) > 1 else members[0]
             parts.append(z3.Intersect(plain, z3.Complement(union)) if negate else z3.Intersect(plain, union))
             i = end + 1
         else:
-            parts.append(z3.Re(z3.StringVal(c)))
+            parts.append(z3.Re(_string(c)))
             i += 1
-    return z3.Concat(*parts) if len(parts) > 1 else (parts[0] if parts else z3.Re(z3.StringVal("")))
+    return z3.Concat(*parts) if len(parts) > 1 else (parts[0] if parts else z3.Re(_string("")))
 
 
 def _new_solver(timeout_ms: int) -> Any:
@@ -557,6 +557,13 @@ def _counterexample(
     return ProofResult(
         "exceeds_boundary", "boundary_exceeded" if mode != "no_bypass" else "hard_deny_bypassed", coverage, detail, ms
     )
+
+
+def _string(value: str) -> Any:
+    """A solver string constant. Z3 reads a backslash followed by `u` or `x` inside a literal as an escape sequence, so
+    a constant that contains one would stand for other characters than the evaluator compares; every backslash is
+    therefore written as its own escape (`u{5c}` after a backslash) and every other character is taken as it is."""
+    return z3.StringVal(value.replace(chr(92), chr(92) + "u{5c}"))
 
 
 _SMT_ESCAPE = re.compile(r"\\u\{([0-9a-fA-F]+)\}")  # how z3 prints characters it cannot show

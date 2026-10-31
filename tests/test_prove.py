@@ -76,6 +76,24 @@ class TestBoundary:
         assert r.result == "exceeds_boundary" and r.counterexample["action"]["environment"]["env"] == "prod"  # type: ignore[index]
         assert r.counterexample["action"]["target"]["name"].startswith("db")  # type: ignore[index]
 
+    def test_a_backslash_in_a_constant_is_not_an_escape_sequence(self, project: Project) -> None:
+        # Z3 reads backslash-u0041 inside a literal as the letter A; the evaluator compares the six characters
+        bs = chr(92)
+        written = "a" + bs + "u0041"
+        cand = project.policy(
+            doc("  - {id: r, outcome: allow, when: {environment.env: ['" + written + "']}}\n"), name="c.policy.yaml"
+        )
+        bound = project.policy(
+            doc("  - {id: r, outcome: allow, when: {environment.env: [aA]}}\n"), name="b.policy.yaml"
+        )
+        r = prove(cand, bound)
+        assert r.result == "exceeds_boundary"
+        assert r.counterexample["action"]["environment"]["env"] == written  # type: ignore[index]
+        same = project.policy(
+            doc("  - {id: r, outcome: allow, when: {environment.env: ['" + written + "']}}\n"), name="s.policy.yaml"
+        )
+        assert prove(cand, same).result == "within_boundary"
+
     def test_absent_never_matches_so_it_cannot_exceed(self, project: Project) -> None:
         cand = project.policy(doc("  - {id: r, outcome: allow, when: {arguments.n: {ne: 5}}}\n"), name="c.policy.yaml")
         bound = project.policy(

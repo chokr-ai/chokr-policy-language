@@ -28,7 +28,7 @@ from cplang.policy import CompiledPolicy, PolicyWarning, load_policy
 from cplang.profile import NEUTRAL, Failure, Profile, RuleKey, SignalEffect
 from cplang.runtime import CplLimits
 
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 LANGUAGE_VERSION = "1.0"
 
 __all__ = [
